@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flight Subscription Manager - Real-time Flight Monitoring & Notifications</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header" id="header">
+    <nav class="nav-container">
+      <a href="#" class="logo">
+        <span class="logo-icon">✈️</span>
+        <span>reactivewings.com</span>
+      </a>
+      
+      <ul class="nav-menu">
+        <li><a href="#features" class="nav-link">Features</a></li>
+        <li><a href="#stats" class="nav-link">System Stats</a></li>
+        <li><a href="https://github.com/AryehRotberg/flights" class="nav-link" target="_blank">Documentation</a></li>
+        <li><a href="https://github.com/AryehRotberg/flights/issues" class="nav-link" target="_blank">Support</a></li>
+        <li><a href="#" class="nav-cta">Sign In</a></li>
+      </ul>
+      
+      <div class="mobile-menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </nav>
+  </header>
+  
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="hero-container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span>🛫</span>
+          <span>Ben Gurion Airport Real-time Monitoring</span>
+        </div>
+        
+        <h1 class="hero-title">
+          Never miss a flight update with 
+          <span class="highlight">intelligent notifications</span>
+        </h1>
+        
+        <p class="hero-description">
+          Real-time flight monitoring system for Ben Gurion International Airport. 
+          Subscribe to specific flights and receive instant email notifications 
+          when status, terminal, or schedule changes occur.
+        </p>
+        
+        <div class="hero-buttons">
+          <button class="primary-button">
+            <span>Start Monitoring Flights</span>
+            <span>→</span>
+            <span class="loading-spinner"></span>
+          </button>
+          <a href="#features" class="secondary-button">
+            <span>See Features</span>
+            <span>↓</span>
+          </a>
+        </div>
+      </div>
+      
+      <!-- <div class="hero-visual">
+        <div class="dashboard-preview">
+          <div class="preview-header">
+            <div class="preview-title">
+              <span>📊</span>
+              <span>Flight Dashboard</span>
+            </div>
+            <div class="preview-status">
+              <span class="status-dot"></span>
+              <span>Live</span>
+            </div>
+          </div>
+          
+          <div class="flight-cards">
+            <div class="flight-card">
+              <div class="flight-route">
+                <span class="airport-code">LAX</span>
+                <span class="flight-arrow">→</span>
+                <span class="airport-code">JFK</span>
+              </div>
+              <div class="flight-info">
+                <span>AA 123 • 14:30</span>
+                <span class="flight-status">On Time</span>
+              </div>
+            </div>
+            
+            <div class="flight-card">
+              <div class="flight-route">
+                <span class="airport-code">SFO</span>
+                <span class="flight-arrow">→</span>
+                <span class="airport-code">ORD</span>
+              </div>
+              <div class="flight-info">
+                <span>UA 456 • 16:45</span>
+                <span class="flight-status">On Time</span>
+              </div>
+            </div>
+            
+            <div class="flight-card">
+              <div class="flight-route">
+                <span class="airport-code">BOS</span>
+                <span class="flight-arrow">→</span>
+                <span class="airport-code">MIA</span>
+              </div>
+              <div class="flight-info">
+                <span>DL 789 • 18:20</span>
+                <span class="flight-status">Delayed</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+  </main>
+  
+  <!-- Features Section -->
+  <section class="features-section" id="features">
+    <div class="features-container">
+      <div class="features-header">
+        <h2 class="features-title">Powerful Flight Monitoring</h2>
+        <p class="features-subtitle">
+          Stay informed with real-time flight updates, automated notifications, and comprehensive subscription management.
+        </p>
+      </div>
+      
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🔔</div>
+          <h3 class="feature-title">Smart Email Notifications</h3>
+          <p class="feature-description">
+            Automated HTML email alerts via SendGrid when subscribed flights experience 
+            status changes, terminal updates, schedule modifications, or counter assignments.
+          </p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon"> </div>
+          <h3 class="feature-title">Real-time Data Sync</h3>
+          <p class="feature-description">
+            Automatically syncs flight data from Ben Gurion Airport's API every 60 seconds, 
+            ensuring you always have the most current flight information.
+          </p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">🔐</div>
+          <h3 class="feature-title">Google OAuth Security</h3>
+          <p class="feature-description">
+            Secure user authentication with Google OAuth 2.0 integration. 
+            No passwords to remember - just sign in with your Google account.
+          </p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">✈️</div>
+          <h3 class="feature-title">Ben Gurion Airport Focus</h3>
+          <p class="feature-description">
+            Specialized monitoring for Israel's main international hub with 
+            comprehensive coverage of all departures and arrivals.
+          </p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">📱</div>
+          <h3 class="feature-title">Flight Subscriptions</h3>
+          <p class="feature-description">
+            Subscribe to specific flights for personalized updates. Manage multiple 
+            subscriptions and receive notifications only for flights you care about.
+          </p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3 class="feature-title">Reactive Architecture</h3>
+          <p class="feature-description">
+            Built with Spring WebFlux for high-performance, non-blocking operations. 
+            Cloud-ready deployment on Google Kubernetes Engine ensures reliability.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Stats Section -->
+  <section class="stats-section" id="stats">
+    <div class="stats-container">
+      <div class="stat-item">
+        <span class="stat-number" data-value="60">0</span>
+        <span class="stat-label">Second Data Sync</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" data-value="24">0</span>
+        <span class="stat-label">Hour Monitoring</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" data-value="99.9">0</span>
+        <span class="stat-label">% System Uptime</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" data-value="1">0</span>
+        <span class="stat-label">Israel's Main Airport</span>
+      </div>
+    </div>
+  </section>
+  
+  <!-- JavaScript Files -->
+  <script src="js/config.js"></script>
+  <script src="js/home.js"></script>
+</body>
+</html>
