@@ -151,10 +151,16 @@ const proxyRequest = async (req, res, endpoint, method = 'GET') => {
   } catch (error) {
     console.error('Proxy error for', endpoint, ':', error.message);
     console.error('Full error:', error);
+    console.error('Target URL was:', url);
+    console.error('Environment API_BASE_URL:', process.env.API_BASE_URL);
+    console.error('Runtime API_BASE_URL:', API_BASE_URL);
+    
     res.status(500).json({ 
       error: 'Internal server error',
       message: error.message,
-      endpoint: endpoint
+      endpoint: endpoint,
+      targetUrl: url,
+      environmentApiUrl: process.env.API_BASE_URL
     });
   }
 };
