@@ -33,7 +33,7 @@ window.AppConfig = {
     
     // Feature flags
     FEATURES: {
-        USE_PROXY: true, // Set to true to use Node.js server proxy, false to call backend directly
+        USE_PROXY: false, // Set to false to call backend directly with JWT tokens
         ENABLE_LOGGING: true,
         ENABLE_ERROR_REPORTING: true
     },
