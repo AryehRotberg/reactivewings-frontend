@@ -11,15 +11,44 @@ const CONFIG = window.CONFIG;/**
 
 const API = {
     get baseUrl() {
+        let url;
         // Use global configuration
-        if (typeof AppConfig !== 'undefined') {
-            return AppConfig.URLS.API_ENDPOINTS.BASE + '/';
+        if (typeof AppConfig !== 'undefined' && AppConfig.URLS.API_BASE) {
+            url = AppConfig.URLS.API_ENDPOINTS.BASE + '/';
         }
         // Fallback to legacy CONFIG if AppConfig is not available
-        if (typeof CONFIG !== 'undefined') {
-            return CONFIG.API.getBaseUrl();
+        else if (typeof CONFIG !== 'undefined') {
+            url = CONFIG.API.getBaseUrl();
         }
-        return "http://localhost:8080/";
+        else {
+            url = "http://localhost:8080/";
+        }
+        
+        console.log('[API.baseUrl]', 'Constructed baseUrl:', url);
+        return url;
+    },
+
+    /**
+     * Get stored JWT token from localStorage
+     */
+    getStoredToken() {
+        return localStorage.getItem("auth_token");
+    },
+
+    /**
+     * Get authorization headers with JWT token
+     */
+    getAuthHeaders() {
+        const token = this.getStoredToken();
+        const headers = {
+            "Content-Type": "application/json"
+        };
+        
+        if (token) {
+            headers["Authorization"] = `Bearer ${token}`;
+        }
+        
+        return headers;
     },
 
     /**
@@ -29,19 +58,23 @@ const API = {
         try {
             const response = await fetch(this.baseUrl + "users/user-info", {
                 method: "GET",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                credentials: "include" // important: send cookies (session/JWT)
+                headers: this.getAuthHeaders()
             });
     
             if (!response.ok) {
+                if (response.status === 401) {
+                    // Token expired or invalid, redirect to login
+                    localStorage.removeItem("auth_token");
+                    window.location.href = "/";
+                    return;
+                }
                 throw new Error(`Failed to fetch user info: ${response.status}`);
             }
     
             return await response.json();
         } catch (error) {
-            window.location.href = this.baseUrl + "oauth2/authorization/google";
+            console.error("Error fetching user info:", error);
+            throw error;
         }
     },
 
@@ -71,12 +104,16 @@ const API = {
     async subscribeToFlight(flightData) {
         const response = await fetch(this.baseUrl + "users/subscribe", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            credentials: "include", // important: send cookies (session/JWT)
+            headers: this.getAuthHeaders(),
             body: JSON.stringify(flightData)
         });
+
+        if (response.status === 401) {
+            // Token expired or invalid, redirect to login
+            localStorage.removeItem("auth_token");
+            window.location.href = "/";
+            return;
+        }
 
         if (!response.ok) {
             throw new Error(`Subscription failed: ${response.status}`);
@@ -95,13 +132,20 @@ const API = {
             scheduledDate: scheduledTime
         });
 
+        const headers = this.getAuthHeaders();
+        headers["Content-Type"] = "application/x-www-form-urlencoded";
+
         const response = await fetch(this.baseUrl + "users/unsubscribe?" + params.toString(), {
             method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            credentials: "include" // important: send cookies (session/JWT)
+            headers: headers
         });
+
+        if (response.status === 401) {
+            // Token expired or invalid, redirect to login
+            localStorage.removeItem("auth_token");
+            window.location.href = "/";
+            return;
+        }
 
         if (!response.ok) {
             throw new Error(`Failed to delete subscription: ${response.status}`);
@@ -111,16 +155,22 @@ const API = {
     },
 
     async logout() {
-        await fetch(this.baseUrl + "logout", {
-            method: "POST",
-            credentials: "include" // important if cookies are used
-        })
-        .then(() => {
-            // Clear any tokens you stored in frontend
+        try {
+            const response = await fetch(this.baseUrl + "logout", {
+                method: "POST",
+                headers: this.getAuthHeaders()
+            });
+            
+            // Always clear the token regardless of response status
+            localStorage.removeItem("auth_token");
             console.log("Logged out successfully");
-            window.location.href = "/"; // your post-logout page
-        })
-        .catch(err => alert("Logout failed: " + err.message));
+            window.location.href = "/";
+        } catch (err) {
+            // Even if logout fails, clear local token and redirect
+            localStorage.removeItem("auth_token");
+            console.error("Logout request failed:", err);
+            window.location.href = "/";
+        }
     }
 };
 /**
@@ -299,7 +349,11 @@ const UIUtils = {
                         <span class="detail-value">${sub.checkinZone || 'NOT CONFIRMED'}</span>
                     </div>
                 </div>
-                <button class="btn btn-danger" id="deleteBtn_${index}" onclick="SubscriptionManager.deleteSubscription('${sub.airlineCode}', '${sub.flightNumber}', '${this.formatScheduledTimeForAPI(sub.scheduledTime)}', ${index})">
+                <button class="btn btn-danger delete-subscription-btn" 
+                        data-airline-code="${sub.airlineCode}" 
+                        data-flight-number="${sub.flightNumber}" 
+                        data-scheduled-time="${this.formatScheduledTimeForAPI(sub.scheduledTime)}" 
+                        data-index="${index}">
                     <span class="btn-icon">🗑️</span>
                     <span class="btn-text">Remove Subscription</span>
                 </button>
@@ -392,6 +446,9 @@ const SubscriptionManager = {
                     subscriptionsHtml += UIUtils.generateSubscriptionHTML(sub, index);
                 });
                 subscriptionsDiv.innerHTML = subscriptionsHtml;
+                
+                // Add event listeners for delete buttons
+                this.attachDeleteEventListeners();
             } else {
                 subscriptionsDiv.innerHTML = UIUtils.generateEmptyStateHTML();
             }
@@ -407,11 +464,29 @@ const SubscriptionManager = {
     },
 
     /**
+     * Attach event listeners to delete buttons
+     */
+    attachDeleteEventListeners() {
+        const deleteButtons = document.querySelectorAll('.delete-subscription-btn');
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                const airlineCode = button.getAttribute('data-airline-code');
+                const flightNumber = button.getAttribute('data-flight-number');
+                const scheduledTime = button.getAttribute('data-scheduled-time');
+                const index = button.getAttribute('data-index');
+                
+                this.deleteSubscription(airlineCode, flightNumber, scheduledTime, index, button);
+            });
+        });
+    },
+
+    /**
      * Delete a subscription
      */
-    async deleteSubscription(airlineCode, flightNumber, scheduledTime, index) {
-        const deleteButtonId = `deleteBtn_${index}`;
-        LoadingManager.showButtonLoading(deleteButtonId);
+    async deleteSubscription(airlineCode, flightNumber, scheduledTime, index, buttonElement) {
+        // Show loading on the specific button that was clicked
+        buttonElement.disabled = true;
+        buttonElement.classList.add('loading');
         
         try {
             await API.unsubscribeFromFlight(airlineCode, flightNumber, scheduledTime);
@@ -421,7 +496,9 @@ const SubscriptionManager = {
             console.error("Error deleting subscription:", error);
             UIUtils.showMessage("subscriptionsList", `Failed to delete subscription: ${error.message}`, true);
         } finally {
-            LoadingManager.hideButtonLoading(deleteButtonId);
+            // Re-enable button (though it will be refreshed anyway)
+            buttonElement.disabled = false;
+            buttonElement.classList.remove('loading');
         }
     },
 
@@ -507,6 +584,16 @@ const FlightApp = {
         LoadingManager.showPageLoading();
         
         try {
+            // Handle OAuth callback first
+            this.handleOAuthCallback();
+            
+            // Check if user is authenticated
+            if (!this.isAuthenticated()) {
+                console.log("User not authenticated, redirecting to home");
+                window.location.href = "/";
+                return;
+            }
+            
             // Add a small delay to show the loading animation
             await new Promise(resolve => setTimeout(resolve, 800));
             
@@ -525,6 +612,49 @@ const FlightApp = {
         } finally {
             LoadingManager.hidePageLoading();
         }
+    },
+
+    /**
+     * Handle OAuth redirect with ?token=... parameter
+     */
+    handleOAuthCallback() {
+        const params = new URLSearchParams(window.location.search);
+        const token = params.get("token");
+
+        if (token) {
+            console.log("📥 Received token from backend:", token);
+            localStorage.setItem("auth_token", token);
+
+            // Remove token from URL for security
+            window.history.replaceState({}, document.title, "/dashboard");
+            
+            // Show success message
+            this.showAuthenticationSuccess();
+        }
+    },
+
+    /**
+     * Check if user has a valid token
+     */
+    isAuthenticated() {
+        const token = localStorage.getItem("auth_token");
+        return !!token;
+    },
+
+    /**
+     * Show authentication success message
+     */
+    showAuthenticationSuccess() {
+        const div = document.createElement("div");
+        div.style.cssText = `
+            position: fixed; top: 20px; right: 20px;
+            background: #4caf50; color: white;
+            padding: 15px 20px; border-radius: 5px;
+            z-index: 9999;
+        `;
+        div.textContent = "✅ Authentication Successful!";
+        document.body.appendChild(div);
+        setTimeout(() => div.remove(), 4000);
     },
 
     /**
