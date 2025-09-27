@@ -1,12 +1,6 @@
 {
   "version": 2,
   "name": "reactivewings-frontend",
-  "builds": [
-    {
-      "src": "server.js",
-      "use": "@vercel/node"
-    }
-  ],
   "routes": [
     {
       "src": "/",
@@ -26,6 +20,10 @@
     },
     {
       "src": "/health",
+      "dest": "/server.js"
+    },
+    {
+      "src": "/auth/(.*)",
       "dest": "/server.js"
     },
     {

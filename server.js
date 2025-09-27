@@ -202,14 +202,30 @@ app.get('/auth/callback', (req, res) => {
 
 // Configuration endpoint for frontend
 app.get('/config.json', (req, res) => {
+  // Auto-detect server URL based on request headers (useful for Vercel)
+  const getServerUrl = () => {
+    if (process.env.SERVER_URL) {
+      return process.env.SERVER_URL;
+    }
+    
+    // For Vercel deployment, auto-detect from request
+    if (req.headers.host && req.headers.host.includes('vercel.app')) {
+      return `https://${req.headers.host}`;
+    }
+    
+    // Default fallback
+    return `http://localhost:${PORT}`;
+  };
+  
   const config = {
     API_BASE_URL: API_BASE_URL,
-    SERVER_URL: process.env.SERVER_URL || `http://localhost:${PORT}`,
+    SERVER_URL: getServerUrl(),
     NODE_ENV: process.env.NODE_ENV || 'development'
   };
   
   console.log('Serving config.json:', config);
   console.log('Environment API_BASE_URL:', process.env.API_BASE_URL);
+  console.log('Request host:', req.headers.host);
   
   res.json(config);
 });
