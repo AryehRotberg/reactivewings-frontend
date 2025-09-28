@@ -1,22 +1,12 @@
-/**
- * Dashboard configuration - uses global AppConfig
- * This section is kept for backward compatibility but now uses centralized config
- */
 
-// Use the global configuration (loaded from config.js)
-const CONFIG = window.CONFIG;/**
- * API Service Module
- * Handles all HTTP requests to the backend API
- */
+const CONFIG = window.CONFIG;
 
 const API = {
     get baseUrl() {
         let url;
-        // Use global configuration
         if (typeof AppConfig !== 'undefined' && AppConfig.URLS.API_BASE) {
             url = AppConfig.URLS.API_ENDPOINTS.BASE + '/';
         }
-        // Fallback to legacy CONFIG if AppConfig is not available
         else if (typeof CONFIG !== 'undefined') {
             url = CONFIG.API.getBaseUrl();
         }
@@ -28,16 +18,10 @@ const API = {
         return url;
     },
 
-    /**
-     * Get stored JWT token from localStorage
-     */
     getStoredToken() {
         return localStorage.getItem("auth_token");
     },
 
-    /**
-     * Get authorization headers with JWT token
-     */
     getAuthHeaders() {
         const token = this.getStoredToken();
         const headers = {
@@ -51,9 +35,6 @@ const API = {
         return headers;
     },
 
-    /**
-     * Fetch user information and subscriptions
-     */
     async getUserInfo() {
         try {
             const response = await fetch(this.baseUrl + "users/user-info", {
@@ -63,7 +44,6 @@ const API = {
     
             if (!response.ok) {
                 if (response.status === 401) {
-                    // Token expired or invalid, redirect to login
                     localStorage.removeItem("auth_token");
                     window.location.href = "/";
                     return;
@@ -78,9 +58,6 @@ const API = {
         }
     },
 
-    /**
-     * Search for flights
-     */
     async searchFlights(airlineCode, flightNumber, scheduledTime) {
         const searchUrl = `${this.baseUrl}flights/search?airlineCode=${airlineCode}&flightNumber=${flightNumber}&scheduledDate=${scheduledTime}`;
         
@@ -98,9 +75,6 @@ const API = {
         return await response.json();
     },
 
-    /**
-     * Subscribe to flight updates
-     */
     async subscribeToFlight(flightData) {
         const response = await fetch(this.baseUrl + "users/subscribe", {
             method: "POST",
@@ -109,7 +83,6 @@ const API = {
         });
 
         if (response.status === 401) {
-            // Token expired or invalid, redirect to login
             localStorage.removeItem("auth_token");
             window.location.href = "/";
             return;
@@ -122,9 +95,6 @@ const API = {
         return await response.json();
     },
 
-    /**
-     * Unsubscribe from flight updates
-     */
     async unsubscribeFromFlight(airlineCode, flightNumber, scheduledTime) {
         const params = new URLSearchParams({
             airlineCode: airlineCode,
@@ -141,7 +111,6 @@ const API = {
         });
 
         if (response.status === 401) {
-            // Token expired or invalid, redirect to login
             localStorage.removeItem("auth_token");
             window.location.href = "/";
             return;
@@ -161,28 +130,18 @@ const API = {
                 headers: this.getAuthHeaders()
             });
             
-            // Always clear the token regardless of response status
             localStorage.removeItem("auth_token");
             console.log("Logged out successfully");
             window.location.href = "/";
         } catch (err) {
-            // Even if logout fails, clear local token and redirect
             localStorage.removeItem("auth_token");
             console.error("Logout request failed:", err);
             window.location.href = "/";
         }
     }
 };
-/**
- * Loading States Module
- * Manages loading indicators for different UI elements
- */
 
 const LoadingManager = {
-    
-    /**
-     * Show/hide page loading overlay
-     */
     showPageLoading() {
         document.getElementById('pageLoadingOverlay').style.display = 'flex';
     },
@@ -191,9 +150,6 @@ const LoadingManager = {
         document.getElementById('pageLoadingOverlay').style.display = 'none';
     },
 
-    /**
-     * Show/hide section loading
-     */
     showSectionLoading(sectionId) {
         const section = document.getElementById(sectionId);
         if (section) {
@@ -208,23 +164,17 @@ const LoadingManager = {
         }
     },
 
-    /**
-     * Show/hide button loading
-     */
     showButtonLoading(buttonId) {
         const button = document.getElementById(buttonId);
         if (button) {
-            // Store original styles to prevent any changes
             const originalStyle = button.style.cssText;
             const originalClasses = button.className;
             button.dataset.originalStyle = originalStyle;
             button.dataset.originalClasses = originalClasses;
             
-            // Add loading class and disable button
             button.classList.add('loading');
             button.disabled = true;
             
-            // Add spinner next to button (not inside)
             const spinner = document.createElement('div');
             spinner.className = 'loading-spinner-beside';
             spinner.id = buttonId + '_spinner';
@@ -235,38 +185,27 @@ const LoadingManager = {
     hideButtonLoading(buttonId) {
         const button = document.getElementById(buttonId);
         if (button) {
-            // Remove loading class and re-enable button
             button.classList.remove('loading');
             button.disabled = false;
             
-            // Restore original styles if any were stored
             if (button.dataset.originalStyle !== undefined) {
                 button.style.cssText = button.dataset.originalStyle;
                 delete button.dataset.originalStyle;
             }
             
-            // Restore original classes if needed
             if (button.dataset.originalClasses !== undefined) {
                 delete button.dataset.originalClasses;
             }
             
-            // Remove spinner
             const spinner = document.getElementById(buttonId + '_spinner');
             if (spinner) {
                 spinner.remove();
             }
         }
     }
-};/**
- * UI Utilities Module
- * Handles UI interactions, messaging, and utility functions
- */
+};
 
 const UIUtils = {
-    
-    /**
-     * Display messages to the user
-     */
     showMessage(elementId, message, isError = false) {
         const element = document.getElementById(elementId);
         if (!element) {
@@ -281,9 +220,6 @@ const UIUtils = {
         }, 5000);
     },
 
-    /**
-     * Format date for display
-     */
     formatDate(dateString) {
         if (!dateString) return 'N/A';
         const date = new Date(dateString);
@@ -297,21 +233,14 @@ const UIUtils = {
         });
     },
 
-    /**
-     * Convert scheduled_time to yyyy-mm-dd format for API
-     */
     formatScheduledTimeForAPI(scheduledTime) {
         if (!scheduledTime) return '';
         const date = new Date(scheduledTime);
-        // Format as yyyy-mm-dd
         return date.getFullYear() + '-' + 
                 String(date.getMonth() + 1).padStart(2, '0') + '-' + 
                 String(date.getDate()).padStart(2, '0');
     },
 
-    /**
-     * Generate HTML for subscription item
-     */
     generateSubscriptionHTML(sub, index) {
         return `
             <div class="subscription-item">
@@ -361,9 +290,6 @@ const UIUtils = {
         `;
     },
 
-    /**
-     * Generate empty state HTML
-     */
     generateEmptyStateHTML() {
         return `
             <div class="empty-state">
@@ -376,11 +302,7 @@ const UIUtils = {
         `;
     },
 
-    /**
-     * Initialize menu functionality
-     */
     initializeMenu() {
-        // Menu toggle functionality
         document.getElementById("menuToggle").addEventListener("click", function() {
             const menu = document.getElementById("menuDropdown");
             const toggle = document.getElementById("menuToggle");
@@ -389,7 +311,6 @@ const UIUtils = {
             toggle.classList.toggle("active");
         });
 
-        // Close menu when clicking outside
         document.addEventListener("click", function(event) {
             const menuContainer = document.querySelector(".menu-container");
             const menu = document.getElementById("menuDropdown");
@@ -402,25 +323,16 @@ const UIUtils = {
         });
     },
 
-    /**
-     * Validate form input
-     */
     validateSubscriptionForm(airlineCode, flightNumber, scheduledDate) {
         if (!airlineCode || !flightNumber || !scheduledDate) {
             throw new Error("Please fill in all fields.");
         }
     }
-};/**
- * Subscription Manager Module
- * Handles subscription-related functionality
- */
+};
 
 const SubscriptionManager = {
     currentSubscriptions: [],
 
-    /**
-     * Load and display user subscriptions
-     */
     async loadUserSubscriptions() {
         LoadingManager.showSectionLoading('subscriptionsSection');
         LoadingManager.showButtonLoading('refreshSubscriptions');
@@ -428,7 +340,6 @@ const SubscriptionManager = {
         try {
             const userInfo = await API.getUserInfo();
             
-            // Display user info
             document.getElementById("userInfo").innerHTML = `
                 <div class="user-info">
                     <h3>👤 User Information</h3>
@@ -436,7 +347,6 @@ const SubscriptionManager = {
                 </div>
             `;
 
-            // Display subscriptions
             const subscriptionsDiv = document.getElementById("subscriptionsList");
             this.currentSubscriptions = userInfo.subscriptions || [];
             
@@ -447,7 +357,6 @@ const SubscriptionManager = {
                 });
                 subscriptionsDiv.innerHTML = subscriptionsHtml;
                 
-                // Add event listeners for delete buttons
                 this.attachDeleteEventListeners();
             } else {
                 subscriptionsDiv.innerHTML = UIUtils.generateEmptyStateHTML();
@@ -463,9 +372,6 @@ const SubscriptionManager = {
         }
     },
 
-    /**
-     * Attach event listeners to delete buttons
-     */
     attachDeleteEventListeners() {
         const deleteButtons = document.querySelectorAll('.delete-subscription-btn');
         deleteButtons.forEach(button => {
@@ -480,39 +386,29 @@ const SubscriptionManager = {
         });
     },
 
-    /**
-     * Delete a subscription
-     */
     async deleteSubscription(airlineCode, flightNumber, scheduledTime, index, buttonElement) {
-        // Show loading on the specific button that was clicked
         buttonElement.disabled = true;
         buttonElement.classList.add('loading');
         
         try {
             await API.unsubscribeFromFlight(airlineCode, flightNumber, scheduledTime);
             UIUtils.showMessage("subscriptionsList", "Subscription deleted successfully!");
-            this.loadUserSubscriptions(); // Refresh the list
+            this.loadUserSubscriptions();
         } catch (error) {
             console.error("Error deleting subscription:", error);
             UIUtils.showMessage("subscriptionsList", `Failed to delete subscription: ${error.message}`, true);
         } finally {
-            // Re-enable button (though it will be refreshed anyway)
             buttonElement.disabled = false;
             buttonElement.classList.remove('loading');
         }
     },
 
-    /**
-     * Subscribe to a flight
-     */
     async subscribeToFlight(airlineCode, flightNumber, scheduledDate) {
         LoadingManager.showButtonLoading('subscribeBtn');
 
         try {
-            // Validate input
             UIUtils.validateSubscriptionForm(airlineCode, flightNumber, scheduledDate);
 
-            // Search for the flight
             const searchResults = await API.searchFlights(airlineCode, flightNumber, scheduledDate);
             
             if (!searchResults || searchResults.length === 0) {
@@ -520,7 +416,6 @@ const SubscriptionManager = {
                 return;
             }
 
-            // Prepare subscription data
             const flightData = {
                 id: searchResults[0].id,
                 flightId: searchResults[0].flightId,
@@ -541,12 +436,11 @@ const SubscriptionManager = {
                 lastUpdated: new Date().toISOString()
             };
 
-            // Subscribe to the flight
             await API.subscribeToFlight(flightData);
 
             UIUtils.showMessage("subscriptionMessage", "Flight subscription added successfully!");
             document.getElementById("subscriptionForm").reset();
-            this.loadUserSubscriptions(); // Refresh the list
+            this.loadUserSubscriptions();
             
         } catch (error) {
             console.error("Subscription error:", error);
@@ -556,9 +450,6 @@ const SubscriptionManager = {
         }
     },
 
-    /**
-     * Initialize subscription form handler
-     */
     initializeSubscriptionForm() {
         document.getElementById("subscriptionForm").addEventListener("submit", async (e) => {
             e.preventDefault();
@@ -570,40 +461,28 @@ const SubscriptionManager = {
             await this.subscribeToFlight(airlineCode, flightNumber, scheduledDate);
         });
     }
-};/**
- * Main Application Module
- * Initializes the application and coordinates between modules
- */
+};
 
 const FlightApp = {
-    
-    /**
-     * Initialize the application
-     */
     async init() {
         LoadingManager.showPageLoading();
         
         try {
-            // Handle OAuth callback first
             this.handleOAuthCallback();
-            
-            // Check if user is authenticated
+
             if (!this.isAuthenticated()) {
                 console.log("User not authenticated, redirecting to home");
                 window.location.href = "/";
                 return;
             }
             
-            // Add a small delay to show the loading animation
             await new Promise(resolve => setTimeout(resolve, 800));
             
-            // Initialize UI components
             UIUtils.initializeMenu();
             SubscriptionManager.initializeSubscriptionForm();
             this.initializeEventHandlers();
             this.setDefaultScheduledDate();
             
-            // Load initial data
             await SubscriptionManager.loadUserSubscriptions();
             
         } catch (error) {
@@ -614,9 +493,6 @@ const FlightApp = {
         }
     },
 
-    /**
-     * Handle OAuth redirect with ?token=... parameter
-     */
     handleOAuthCallback() {
         const params = new URLSearchParams(window.location.search);
         const token = params.get("token");
@@ -625,25 +501,17 @@ const FlightApp = {
             console.log("📥 Received token from backend:", token);
             localStorage.setItem("auth_token", token);
 
-            // Remove token from URL for security
             window.history.replaceState({}, document.title, "/dashboard");
             
-            // Show success message
             this.showAuthenticationSuccess();
         }
     },
 
-    /**
-     * Check if user has a valid token
-     */
     isAuthenticated() {
         const token = localStorage.getItem("auth_token");
         return !!token;
     },
 
-    /**
-     * Show authentication success message
-     */
     showAuthenticationSuccess() {
         const div = document.createElement("div");
         div.style.cssText = `
@@ -657,22 +525,14 @@ const FlightApp = {
         setTimeout(() => div.remove(), 4000);
     },
 
-    /**
-     * Initialize event handlers for buttons and other interactions
-     */
     initializeEventHandlers() {
-        // Refresh button handler
         document.getElementById("refreshSubscriptions").addEventListener("click", () => {
             SubscriptionManager.loadUserSubscriptions();
         });
 
-        // Logout button handler
         document.getElementById("logout").addEventListener("click", this.logoutUser);
     },
 
-    /**
-     * Set today's date as default for scheduled date field
-     */
     setDefaultScheduledDate() {
         const today = new Date();
         const formattedDate = today.getFullYear() + '-' + 
@@ -685,15 +545,11 @@ const FlightApp = {
         }
     },
 
-    /**
-     * Logout functionality
-     */
     logoutUser() {
         API.logout();
     }
 };
 
-// Initialize application when page loads
 window.addEventListener("load", () => {
     FlightApp.init();
 });
