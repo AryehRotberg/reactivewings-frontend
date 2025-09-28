@@ -44,11 +44,11 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', (_, res) => {
+app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.get('/dashboard', (_, res) => {
+app.get('/dashboard', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
 });
 
@@ -163,7 +163,7 @@ app.post('/api/logout', (req, res) => {
   proxyRequest(req, res, '/logout', 'POST');
 });
 
-app.get('/api/oauth2/authorization/google', (_, res) => {
+app.get('/api/oauth2/authorization/google', (req, res) => {
   res.redirect(`${API_BASE_URL}/oauth2/authorization/google`);
 });
 
@@ -214,7 +214,7 @@ app.use((_, res) => {
   res.status(404).sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.use((error, _, res, _) => {
+app.use((error, req, res, next) => {
   console.error('Server error:', error);
   res.status(500).json({ 
     error: 'Internal server error',
