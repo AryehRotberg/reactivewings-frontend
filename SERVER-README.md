@@ -5,7 +5,6 @@ A Node.js Express server for serving the ReactiveWings Flight Subscription Manag
 ## Features
 
 - ✅ **Static File Serving**: Serves HTML, CSS, JavaScript, and assets
-- ✅ **API Proxy**: Optional proxy to backend API endpoints  
 - ✅ **Security**: Helmet.js for security headers, CORS configuration
 - ✅ **Performance**: Compression middleware, static file caching
 - ✅ **Development**: Hot reload with nodemon, logging with morgan
@@ -50,14 +49,6 @@ The server will start on `http://localhost:3000` by default.
 - `GET /` - Home page (index.html)
 - `GET /dashboard` - Dashboard page (dashboard.html)
 
-### API Proxy Endpoints (Optional)
-- `GET /api/users/user-info` - Get user information
-- `GET /api/flights/search` - Search for flights
-- `POST /api/users/subscribe` - Subscribe to flight updates
-- `POST /api/users/unsubscribe` - Unsubscribe from flight updates
-- `POST /api/logout` - User logout
-- `GET /api/oauth2/authorization/google` - Google OAuth redirect
-
 ### System Endpoints
 - `GET /health` - Health check endpoint
 
@@ -74,19 +65,7 @@ The server will start on `http://localhost:3000` by default.
 
 ### Frontend Configuration
 
-The frontend can be configured to use either:
-
-1. **Direct Backend Calls** (default): Frontend directly calls the backend API
-2. **Proxy Mode**: Frontend calls go through this Node.js server
-
-To enable proxy mode, modify `js/config.js`:
-
-```javascript
-const CONFIG = {
-    USE_PROXY: true, // Change to true for proxy mode
-    // ... other settings
-};
-```
+The frontend is configured to make direct calls to the backend API. Configuration is handled through the `/config.json` endpoint and `js/config.js`.
 
 ## Project Structure
 
@@ -117,9 +96,9 @@ app.get('/new-page', (req, res) => {
   res.sendFile(path.join(__dirname, 'new-page.html'));
 });
 
-// Add a new API proxy route
-app.get('/api/new-endpoint', (req, res) => {
-  proxyRequest(req, res, '/new-endpoint', 'GET');
+// Add a new configuration endpoint
+app.get('/api/config', (req, res) => {
+  res.json({ message: 'Configuration endpoint' });
 });
 ```
 
@@ -239,7 +218,7 @@ The server uses Morgan for HTTP request logging. Logs include:
 
 2. **Backend API connection failed**
    ```bash
-   Proxy error: fetch failed
+   Failed to fetch from backend API
    ```
    Solution: Verify the backend is running on the configured `API_BASE_URL`.
 

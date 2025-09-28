@@ -11,10 +11,6 @@
       "dest": "/server.js"
     },
     {
-      "src": "/api/(.*)",
-      "dest": "/server.js"
-    },
-    {
       "src": "/config.json",
       "dest": "/server.js"
     },

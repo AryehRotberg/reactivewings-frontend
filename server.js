@@ -39,12 +39,6 @@ app.use(helmet({
   }
 }));
 
-// CORS configuration
-// app.use(cors({
-//   origin: process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : ['http://localhost:3000'],
-//   credentials: true
-// }));
-
 // Other middleware
 app.use(compression());
 app.use(morgan('combined'));
@@ -63,136 +57,8 @@ app.get('/dashboard', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
 });
 
-// API proxy routes (optional - you can remove if using direct backend calls)
-// These routes can proxy to your actual backend server
+// Backend API URL for OAuth redirect
 const API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:8080';
-
-// Proxy middleware function
-const proxyRequest = async (req, res, endpoint, method = 'GET') => {
-  try {
-    const fetch = (await import('node-fetch')).default;
-    const url = `${API_BASE_URL}${endpoint}`;
-    
-    // Log JWT token presence for debugging
-    if (req.headers.authorization) {
-      console.log(`🔐 JWT token present for ${method} ${endpoint}: ${req.headers.authorization.substring(0, 20)}...`);
-    } else {
-      console.log(`⚠️  No Authorization header for ${method} ${endpoint}`);
-    }
-    
-    // Prepare headers - only include necessary headers to avoid conflicts
-    const headers = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    };
-    
-    // Add Authorization header if present
-    if (req.headers.authorization) {
-      headers['Authorization'] = req.headers.authorization;
-    }
-    
-    // Add other custom headers that might be needed
-    if (req.headers['x-requested-with']) {
-      headers['X-Requested-With'] = req.headers['x-requested-with'];
-    }
-    
-    const options = {
-      method: method,
-      headers: headers
-    };
-
-    if (method !== 'GET' && req.body) {
-      options.body = JSON.stringify(req.body);
-    }
-
-    console.log(`➡️  Proxying ${method} ${url}`);
-    console.log(`📋 Headers:`, JSON.stringify(headers, null, 2));
-    
-    const response = await fetch(url, options);
-    
-    // Log authentication-related responses
-    if (endpoint.includes('user-info') || endpoint.includes('oauth2') || endpoint.includes('login') || endpoint.includes('logout')) {
-      console.log(`🔐 Auth response: ${response.status} for ${endpoint}`);
-    }
-    
-    // Set response status
-    res.status(response.status);
-    
-    // Set safe response headers
-    const responseHeaders = {};
-    response.headers.forEach((value, key) => {
-      // Only copy safe headers, avoid headers that might cause issues
-      const safeName = key.toLowerCase();
-      if (!['connection', 'transfer-encoding', 'content-encoding', 'content-length'].includes(safeName)) {
-        responseHeaders[key] = value;
-      }
-    });
-    
-    // Set the safe headers
-    Object.entries(responseHeaders).forEach(([key, value]) => {
-      try {
-        res.set(key, value);
-      } catch (e) {
-        console.log(`⚠️  Skipped header ${key}: ${e.message}`);
-      }
-    });
-    
-    // Handle response body based on content type
-    const contentType = response.headers.get('content-type');
-    
-    if (contentType && contentType.includes('application/json')) {
-      const data = await response.json();
-      res.json(data);
-    } else {
-      const data = await response.text();
-      res.send(data);
-    }
-    
-  } catch (error) {
-    console.error('Proxy error for', endpoint, ':', error.message);
-    console.error('Full error:', error);
-    console.error('Target URL was:', url);
-    console.error('Environment API_BASE_URL:', process.env.API_BASE_URL);
-    console.error('Runtime API_BASE_URL:', API_BASE_URL);
-    
-    res.status(500).json({ 
-      error: 'Internal server error',
-      message: error.message,
-      endpoint: endpoint,
-      targetUrl: url,
-      environmentApiUrl: process.env.API_BASE_URL
-    });
-  }
-};
-
-// API routes (proxy to backend)
-app.get('/api/users/user-info', (req, res) => {
-  proxyRequest(req, res, '/users/user-info', 'GET');
-});
-
-app.get('/api/flights/search', (req, res) => {
-  const { airlineCode, flightNumber, scheduledDate } = req.query;
-  const endpoint = `/flights/search?airlineCode=${airlineCode}&flightNumber=${flightNumber}&scheduledDate=${scheduledDate}`;
-  proxyRequest(req, res, endpoint, 'GET');
-});
-
-app.post('/api/users/subscribe', (req, res) => {
-  proxyRequest(req, res, '/users/subscribe', 'POST');
-});
-
-app.post('/api/users/unsubscribe', (req, res) => {
-  const { airlineCode, flightNumber, scheduledDate } = req.query;
-  const endpoint = `/users/unsubscribe?airlineCode=${airlineCode}&flightNumber=${flightNumber}&scheduledDate=${scheduledDate}`;
-  proxyRequest(req, res, endpoint, 'POST');
-});
-
-app.post('/api/logout', (req, res) => {
-  proxyRequest(req, res, '/logout', 'POST');
-});
-
-app.get('/api/oauth2/authorization/google', (req, res) => {
-  res.redirect(`${API_BASE_URL}/oauth2/authorization/google`);
-});
 
 // Handle OAuth callback with token
 app.get('/auth/callback', (req, res) => {
