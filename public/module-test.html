@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6 Module Test</title>
+</head>
+<body>
+    <h1>ES6 Module Test</h1>
+    <div id="output">Loading...</div>
+    
+    <script type="module">
+        import { testMessage, TestClass } from './js/test-module.js';
+        
+        try {
+            console.log('Test message:', testMessage);
+            
+            const testInstance = new TestClass();
+            console.log('Test instance:', testInstance.getMessage());
+            
+            document.getElementById('output').innerHTML = `
+                <p>✅ ${testMessage}</p>
+                <p>✅ ${testInstance.getMessage()}</p>
+                <p>✅ ES6 modules are working correctly!</p>
+            `;
+        } catch (error) {
+            console.error('Module error:', error);
+            document.getElementById('output').innerHTML = `
+                <p>❌ Error: ${error.message}</p>
+            `;
+        }
+    </script>
+</body>
+</html>

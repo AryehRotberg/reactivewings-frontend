@@ -1,5 +1,5 @@
-import { Navigation } from '../components/Navigation.js';
-import { Animations } from '../components/Animations.js';
+import { Navigation } from './Navigation.js';
+import { Animations } from './Animations.js';
 
 /**
  * Main application functionality and initialization for home page
