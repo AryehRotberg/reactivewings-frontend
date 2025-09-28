@@ -2,6 +2,7 @@
   "name": "reactivewings-frontend-server",
   "version": "1.0.0",
   "description": "Node.js server for ReactiveWings Flight Subscription Manager frontend",
+  "type": "module",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
