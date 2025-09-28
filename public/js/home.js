@@ -1,10 +1,104 @@
 /**
  * Main entry point for the home page
- * Inline HomeApp to avoid Vercel bundling CJS for this file.
+ * Self-contained (no imports) to avoid any bundling/CJS issues in the browser.
  */
 
-import { Navigation } from './components/Navigation.js';
-import { Animations } from './components/Animations.js';
+// ---- Inlined Navigation component ----
+class Navigation {
+  constructor() {
+    this.header = document.getElementById('header');
+    this.mobileToggle = document.querySelector('.mobile-menu-toggle');
+    this.navMenu = document.querySelector('.nav-menu');
+    this.init();
+  }
+  init() {
+    this.setupScrollEffect();
+    this.setupMobileMenu();
+    this.setupSmoothScrolling();
+  }
+  setupScrollEffect() {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        this.header && this.header.classList.add('scrolled');
+      } else {
+        this.header && this.header.classList.remove('scrolled');
+      }
+    });
+  }
+  setupMobileMenu() {
+    if (this.mobileToggle && this.navMenu) {
+      this.mobileToggle.addEventListener('click', () => {
+        this.navMenu.classList.toggle('active');
+        this.mobileToggle.classList.toggle('active');
+      });
+      const navLinks = this.navMenu.querySelectorAll('.nav-link');
+      navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          this.navMenu.classList.remove('active');
+          this.mobileToggle.classList.remove('active');
+        });
+      });
+    }
+  }
+  setupSmoothScrolling() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', (e) => {
+        const href = anchor.getAttribute('href');
+        if (href === '#' || href.length <= 1) return;
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  }
+}
+
+// ---- Inlined Animations component ----
+class Animations {
+  constructor() {
+    this.init();
+  }
+  init() {
+    this.setupStatsAnimation();
+  }
+  setupStatsAnimation() {
+    const statNumbers = document.querySelectorAll('.stat-number');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const target = entry.target;
+          const finalValue = parseInt(target.dataset.value);
+          const duration = 2000;
+          this.animateValue(target, 0, finalValue, duration);
+          observer.unobserve(target);
+        }
+      });
+    });
+    statNumbers.forEach(stat => observer.observe(stat));
+  }
+  animateValue(element, start, end, duration) {
+    const startTime = performance.now();
+    const updateValue = (currentTime) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      let current = start + (end - start) * easeOutQuart;
+      if (end >= 1000000) {
+        element.textContent = (current / 1000000).toFixed(1) + 'M+';
+      } else if (end >= 1000) {
+        element.textContent = (current / 1000).toFixed(0) + 'K+';
+      } else if (end < 100) {
+        element.textContent = current.toFixed(2);
+      } else {
+        element.textContent = Math.round(current).toLocaleString();
+      }
+      if (progress < 1) requestAnimationFrame(updateValue);
+    };
+    requestAnimationFrame(updateValue);
+  }
+}
 
 class HomeApp {
   constructor() {
