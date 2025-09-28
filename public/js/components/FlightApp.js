@@ -1,20 +1,20 @@
+import { ApiService } from '../services/ApiService.js';
+import { LoadingManager } from '../utils/LoadingManager.js';
+import { UIUtils } from '../utils/UIUtils.js';
+import { SubscriptionManager } from '../managers/SubscriptionManager.js';
+
 /**
  * Main Flight Application controller for dashboard
  * Orchestrates all dashboard functionality and initialization
  */
 export class FlightApp {
     constructor() {
-        this.apiService = null;
-        this.subscriptionManager = null;
-        this.LoadingManager = null;
-        this.UIUtils = null;
+        this.apiService = new ApiService();
+        this.subscriptionManager = new SubscriptionManager();
     }
 
     async init() {
-        // Load all required modules dynamically
-        await this.loadModules();
-        
-        this.LoadingManager.showPageLoading();
+        LoadingManager.showPageLoading();
         
         try {
             this.handleOAuthCallback();
@@ -27,46 +27,18 @@ export class FlightApp {
             
             await new Promise(resolve => setTimeout(resolve, 800));
             
-            this.UIUtils.initializeMenu();
-            await this.subscriptionManager.initializeSubscriptionForm();
+            UIUtils.initializeMenu();
+            this.subscriptionManager.initializeSubscriptionForm();
             this.initializeEventHandlers();
-            this.UIUtils.setDefaultScheduledDate();
+            UIUtils.setDefaultScheduledDate();
             
             await this.subscriptionManager.loadUserSubscriptions();
             
         } catch (error) {
             console.error("Error during application initialization:", error);
-            this.UIUtils.showMessage("subscriptionsList", `Failed to initialize application: ${error.message}`, true);
+            UIUtils.showMessage("subscriptionsList", `Failed to initialize application: ${error.message}`, true);
         } finally {
-            this.LoadingManager.hidePageLoading();
-        }
-    }
-
-    async loadModules() {
-        try {
-            // Load all required modules
-            const [
-                { ApiService },
-                { LoadingManager },
-                { UIUtils },
-                { SubscriptionManager }
-            ] = await Promise.all([
-                import('../services/ApiService.js'),
-                import('../utils/LoadingManager.js'),
-                import('../utils/UIUtils.js'),
-                import('../managers/SubscriptionManager.js')
-            ]);
-            
-            // Initialize services
-            this.apiService = new ApiService();
-            this.LoadingManager = LoadingManager;
-            this.UIUtils = UIUtils;
-            this.subscriptionManager = new SubscriptionManager();
-            
-            console.log('All modules loaded successfully');
-        } catch (error) {
-            console.error('Error loading modules:', error);
-            throw error;
+            LoadingManager.hidePageLoading();
         }
     }
 
