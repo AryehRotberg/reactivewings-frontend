@@ -1,6 +1,3 @@
-import { Navigation } from './Navigation.js';
-import { Animations } from './Animations.js';
-
 /**
  * Main application functionality and initialization for home page
  */
@@ -12,23 +9,29 @@ export class HomeApp {
     this.init();
   }
   
-  init() {
+  async init() {
     this.setupEventListeners();
-    this.initializeComponents();
+    await this.initializeComponents();
   }
   
   /**
    * Initialize all application components
    */
-  initializeComponents() {
-    // Initialize navigation component
-    this.navigation = new Navigation();
-    
-    // Initialize animations component
-    this.animations = new Animations();
-    
-    // Setup keyboard accessibility
-    this.setupKeyboardAccessibility();
+  async initializeComponents() {
+    try {
+      // Dynamically import and initialize navigation component
+      const { Navigation } = await import('./Navigation.js');
+      this.navigation = new Navigation();
+      
+      // Dynamically import and initialize animations component
+      const { Animations } = await import('./Animations.js');
+      this.animations = new Animations();
+      
+      // Setup keyboard accessibility
+      this.setupKeyboardAccessibility();
+    } catch (error) {
+      console.error('Error loading components:', error);
+    }
   }
   
   /**

@@ -15,6 +15,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     const app = new HomeApp();
     
+    // Initialize the app (this will load modules)
+    await app.init();
+    
     // Handle OAuth redirect callback if present
     app.handleOAuthCallback();
     
