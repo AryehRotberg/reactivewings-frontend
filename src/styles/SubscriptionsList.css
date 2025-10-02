@@ -1,0 +1,144 @@
+/* Subscriptions List Styles */
+.user-info {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.user-info h3 {
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    position: relative;
+    z-index: 1;
+}
+
+.subscription-item {
+    background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+    border: 1px solid #d1e7fd;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 16px 0;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(30, 60, 114, 0.05);
+}
+
+.subscription-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(30, 60, 114, 0.1);
+}
+
+.subscription-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #1e3c72 0%, #2a5298 50%, #87ceeb 100%);
+}
+
+.subscription-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-label {
+    font-size: 0.8em;
+    color: #5a7ba7;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.detail-value {
+    color: #1e3c72;
+    font-weight: 600;
+    font-size: 1em;
+}
+
+.flight-icon {
+    display: inline-block;
+    margin-right: 8px;
+    color: #2a5298;
+    filter: drop-shadow(0 1px 2px rgba(42, 82, 152, 0.3));
+}
+
+.delete-subscription-btn {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.2);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.delete-subscription-btn:hover {
+    background: linear-gradient(135deg, #c0392b 0%, #e74c3c 100%);
+    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.3);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #5a7ba7;
+    background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+    border-radius: 12px;
+    border: 2px dashed #d1e7fd;
+}
+
+.empty-state svg {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+.empty-state h3 {
+    margin-bottom: 8px;
+}
+
+.empty-state p {
+    opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+    .subscription-details {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 12px;
+    }
+
+    .subscription-item {
+        padding: 16px 12px;
+        margin: 12px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .subscription-details {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .detail-item {
+        padding: 8px;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 6px;
+    }
+}

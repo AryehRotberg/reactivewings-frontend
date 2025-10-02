@@ -1,0 +1,50 @@
+/* Toast/Message Styles */
+.message {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    padding: 16px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 2000;
+    animation: slideIn 0.3s ease;
+    max-width: 400px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.message.error {
+    background: linear-gradient(135deg, #ffeaea 0%, #ffebee 100%);
+    color: #c62828;
+    border-left: 4px solid #e74c3c;
+}
+
+.message.success {
+    background: linear-gradient(135deg, #e8f5e8 0%, #f1f8e9 100%);
+    color: #2e7d32;
+    border-left: 4px solid #27ae60;
+}
+
+@media (max-width: 768px) {
+    .message {
+        top: 70px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+        font-size: 0.9em;
+    }
+}
