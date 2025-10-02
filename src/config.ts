@@ -1,9 +1,7 @@
-// In production (Vercel), use /api proxy for API calls. In development, use local backend
-const defaultUrl = import.meta.env.PROD 
+// In production (Vercel), use /api proxy for API calls. In development, use local backend or env var
+export const BACKEND_SERVER_URL = import.meta.env.PROD 
   ? "/api/" 
-  : "http://localhost:8080/";
-
-export const BACKEND_SERVER_URL = import.meta.env.VITE_BACKEND_URL || defaultUrl;
+  : (import.meta.env.VITE_BACKEND_URL || "http://localhost:8080/");
 
 // For OAuth redirects, we need the actual backend URL (not proxied)
 export const BACKEND_OAUTH_URL = import.meta.env.VITE_BACKEND_OAUTH_URL || 

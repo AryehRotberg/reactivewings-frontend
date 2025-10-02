@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/api/:path*",
-      "destination": "http://34.56.197.29.nip.io:8080/:path*"
+      "source": "/api/:path(.*)",
+      "destination": "http://34.56.197.29.nip.io:8080/:path"
     },
     {
       "source": "/(.*)",

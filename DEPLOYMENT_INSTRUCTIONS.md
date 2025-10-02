@@ -31,21 +31,22 @@ git commit -m "Fix: Configure Vercel proxy to resolve mixed content error"
 git push origin main
 ```
 
-### Step 2: Configure Vercel Environment Variables
+### Step 2: Configure Vercel Environment Variables ⚠️ CRITICAL
 In your Vercel project dashboard:
 
 1. Go to **Settings** → **Environment Variables**
-2. Add the following variables:
+2. **DELETE** `VITE_BACKEND_URL` if it exists (this must be removed!)
+3. Add or update:
    - **Name**: `VITE_BACKEND_OAUTH_URL`
    - **Value**: `http://34.56.197.29.nip.io:8080/`
-   - **Environment**: Production
-
-3. (Optional) You can remove `VITE_BACKEND_URL` as it now uses the default `/api/` proxy
+   - **Environment**: Production, Preview, Development (all)
 
 ### Step 3: Redeploy
-Vercel will automatically deploy when you push. Or manually trigger:
+After removing the environment variable:
 - Go to **Deployments** tab
-- Click **"Redeploy"** on the latest deployment
+- Click **"Redeploy"** on the latest deployment (must redeploy for env changes to take effect)
+
+**Important**: Simply pushing code won't update environment variables. You MUST manually remove `VITE_BACKEND_URL` from Vercel settings and redeploy.
 
 ## How It Works
 
