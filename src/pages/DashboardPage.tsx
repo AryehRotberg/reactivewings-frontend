@@ -53,18 +53,18 @@ export default function DashboardPage() {
                         </button>
 
                         {userInfo && (
-                            <>
-                                <div className="user-info">
-                                    <h3>👤 User Information</h3>
-                                    <p><strong>Email:</strong> {userInfo.email}</p>
-                                </div>
+                            <div className="user-info">
+                                <h3>👤 User Information</h3>
+                                <p><strong>Email:</strong> {userInfo.email}</p>
+                            </div>
+                        )}
 
-                                <SubscriptionsList
-                                    subscriptions={userInfo.subscriptions}
-                                    onUnsubscribe={() => refetch(false)}
-                                    onMessage={handleMessage}
-                                />
-                            </>
+                        {!loading && (
+                            <SubscriptionsList
+                                subscriptions={userInfo?.subscriptions || []}
+                                onUnsubscribe={() => refetch(false)}
+                                onMessage={handleMessage}
+                            />
                         )}
                     </div>
                 </div>
