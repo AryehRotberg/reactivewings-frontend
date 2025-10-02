@@ -16,7 +16,10 @@ export default function DashboardPage() {
     const { userInfo, loading, refetch } = useUserInfo();
     const { toast, showToast } = useToast();
 
-    useAuthCallback();
+    useAuthCallback(() => {
+        console.log('Token processed, refetching user info...');
+        refetch(true);
+    });
 
     useEffect(() => {
         if (!isAuthenticated()) {
