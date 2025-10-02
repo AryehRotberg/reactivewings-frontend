@@ -43,14 +43,14 @@
 }
 
 .content {
-    padding: 40px;
+    padding: 30px;
 }
 
 .section {
     background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
     border-radius: 15px;
     padding: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     box-shadow: 0 8px 25px rgba(30, 60, 114, 0.08);
     border: 1px solid rgba(42, 82, 152, 0.1);
     position: relative;
@@ -69,7 +69,7 @@
 
 .section h2 {
     color: #1e3c72;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     font-size: 1.5em;
     border-bottom: 2px solid #87ceeb;
     padding-bottom: 10px;
