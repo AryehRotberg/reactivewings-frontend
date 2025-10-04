@@ -15,7 +15,7 @@ export default function DashboardNav() {
             <div className="dashboard-nav-container">
                 <Link to="/" className="dashboard-logo">
                     <span className="dashboard-logo-icon">✈️</span>
-                    <span>reactivewings.com</span>
+                    <span>reactivewings</span>
                 </Link>
                 <div className="menu-container">
                     <button

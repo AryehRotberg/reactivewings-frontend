@@ -33,9 +33,9 @@
     transition: all 0.3s ease;
 }
 
-.dashboard-logo:hover {
+/* .dashboard-logo:hover {
     transform: scale(1.02);
-}
+} */
 
 .dashboard-logo-icon {
     font-size: 1.4em;

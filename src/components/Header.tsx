@@ -11,7 +11,7 @@ export default function Header({ onSignIn }: HeaderProps) {
             <nav className="header-nav-container">
                 <Link to="/" className="header-logo">
                     <span className="header-logo-icon">✈️</span>
-                    <span>reactivewings.com</span>
+                    <span>reactivewings</span>
                 </Link>
 
                 <ul className="nav-menu">
