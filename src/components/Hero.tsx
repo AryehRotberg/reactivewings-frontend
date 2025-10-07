@@ -11,7 +11,7 @@ export default function Hero({ onGetStarted }: HeroProps) {
                 <div className="hero-content">
                     <div className="hero-badge">
                         <span>🛫</span>
-                        <span>Ben Gurion Airport Real-time Monitoring</span>
+                        <span>Ben Gurion Airport Flight Monitoring</span>
                     </div>
 
                     <h1 className="hero-title">
@@ -20,7 +20,7 @@ export default function Hero({ onGetStarted }: HeroProps) {
                     </h1>
 
                     <p className="hero-description">
-                        Real-time flight monitoring system for Ben Gurion International Airport.
+                        Flight monitoring system for Ben Gurion International Airport.
                         Subscribe to specific flights and receive instant email notifications
                         when status, terminal, or schedule changes occur.
                     </p>
