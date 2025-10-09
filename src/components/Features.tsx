@@ -3,33 +3,33 @@ import '../styles/Features.css';
 const features = [
     {
         icon: '🔔',
-        title: 'Smart Email Notifications',
-        description: 'Automated HTML email alerts via SendGrid when subscribed flights experience status changes, terminal updates, schedule modifications, or counter assignments.'
+        title: 'התראות חכמות במייל',
+        description: 'התראות אוטומטיות במייל HTML דרך SendGrid כאשר טיסות שאליהן נרשמתם חווים שינויים בסטטוס, עדכוני טרמינל, שינויי לוח זמנים או הקצאות דלפק.'
     },
     {
         icon: '⚡',
-        title: 'Real-time Data Sync',
-        description: "Automatically syncs flight data from Ben Gurion Airport's API every 60 seconds, ensuring you always have the most current flight information."
+        title: 'סנכרון נתונים בזמן אמת',
+        description: 'סנכרון אוטומטי של נתוני טיסות מממשק ה-API של נתב"ג כל 60 שניות, מבטיח שתמיד יהיה לכם את המידע העדכני ביותר על הטיסות.'
     },
     {
         icon: '🔐',
-        title: 'Google OAuth Security',
-        description: 'Secure user authentication with Google OAuth 2.0 integration. No passwords to remember - just sign in with your Google account.'
+        title: 'אבטחת Google OAuth',
+        description: 'אימות משתמשים מאובטח עם אינטגרציית Google OAuth 2.0. אין צורך לזכור סיסמאות - פשוט התחברו עם חשבון Google שלכם.'
     },
     {
         icon: '✈️',
-        title: 'Ben Gurion Airport Focus',
-        description: "Specialized monitoring for Israel's main international hub with comprehensive coverage of all departures and arrivals."
+        title: 'התמקדות בנמל התעופה בן גוריון',
+        description: 'ניטור מתמחה למוקד הבינלאומי המרכזי של ישראל עם כיסוי מקיף של כל ההמראות והנחיתות.'
     },
     {
         icon: '📱',
-        title: 'Flight Subscriptions',
-        description: 'Subscribe to specific flights for personalized updates. Manage multiple subscriptions and receive notifications only for flights you care about.'
+        title: 'מינויים לטיסות',
+        description: 'הירשמו לטיסות ספציפיות לעדכונים מותאמים אישית. נהלו מספר מינויים וקבלו התראות רק עבור הטיסות שחשובות לכם.'
     },
     {
         icon: '⚡',
-        title: 'Reactive Architecture',
-        description: 'Built with Spring WebFlux for high-performance, non-blocking operations. Cloud-ready deployment on Google Kubernetes Engine ensures reliability.'
+        title: 'ארכיטקטורה ריאקטיבית',
+        description: 'נבנה עם Spring WebFlux לביצועים גבוהים ופעולות לא חוסמות. פריסה מוכנה לענן ב-Google Kubernetes Engine מבטיחה אמינות.'
     }
 ];
 
@@ -38,9 +38,9 @@ export default function Features() {
         <section className="features-section" id="features">
             <div className="features-container">
                 <div className="features-header">
-                    <h2 className="features-title">Powerful Flight Monitoring</h2>
+                    <h2 className="features-title">ניטור טיסות מתקדם</h2>
                     <p className="features-subtitle">
-                        Stay informed with real-time flight updates, automated notifications, and comprehensive subscription management.
+                        הישארו מעודכנים עם עדכוני טיסות בזמן אמת, התראות אוטומטיות וניהול מינויים מקיף.
                     </p>
                 </div>
 

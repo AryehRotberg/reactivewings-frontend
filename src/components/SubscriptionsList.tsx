@@ -21,11 +21,11 @@ export default function SubscriptionsList({
                 flight.flightNumber,
                 formatScheduledTimeForAPI(flight.scheduledTime)
             );
-            onMessage('Subscription deleted successfully!', false);
+            onMessage('המינוי הוסר בהצלחה!', false);
             onUnsubscribe();
         } catch (err) {
             console.error('Error unsubscribing:', err);
-            onMessage('Failed to delete subscription.', true);
+            onMessage('נכשל בהסרת המינוי.', true);
         }
     };
 
@@ -35,54 +35,54 @@ export default function SubscriptionsList({
                 <svg viewBox="0 0 24 24" fill="currentColor">
                     <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" />
                 </svg>
-                <h3>No Active Subscriptions</h3>
-                <p>Subscribe to your first flight to get started!</p>
+                <h3>אין מינויים פעילים</h3>
+                <p>הירשם לטיסה הראשונה שלך כדי להתחיל!</p>
             </div>
         );
     }
 
     return (
         <>
-            <h3>✈️ Active Subscriptions</h3>
+            <h3>✈️ מינויים פעילים</h3>
             {subscriptions.map((sub, index) => (
                 <div key={index} className="subscription-item">
                     <div className="subscription-details">
                         <div className="detail-item">
-                            <span className="detail-label">Flight</span>
+                            <span className="detail-label">טיסה</span>
                             <span className="detail-value">
                                 <span className="flight-icon">✈️</span>
                                 {sub.airlineCode} {sub.flightNumber}
                             </span>
                         </div>
                         <div className="detail-item">
-                            <span className="detail-label">Airline Company</span>
+                            <span className="detail-label">חברת תעופה</span>
                             <span className="detail-value">{sub.airlineName}</span>
                         </div>
                         <div className="detail-item">
-                            <span className="detail-label">Estimated Time</span>
+                            <span className="detail-label">זמן משוער</span>
                             <span className="detail-value">{formatDate(sub.estimatedTime)}</span>
                         </div>
                         <div className="detail-item">
-                            <span className="detail-label">Destination</span>
+                            <span className="detail-label">יעד</span>
                             <span className="detail-value">
-                                {sub.cityEn || 'N/A'} ({sub.countryEn || 'N/A'})
+                                {sub.cityEn || 'לא זמין'} ({sub.countryEn || 'לא זמין'})
                             </span>
                         </div>
                         <div className="detail-item">
-                            <span className="detail-label">Status</span>
-                            <span className="detail-value">{sub.statusEn || 'Unknown'}</span>
+                            <span className="detail-label">סטטוס</span>
+                            <span className="detail-value">{sub.statusEn || 'לא ידוע'}</span>
                         </div>
                         <div className="detail-item">
-                            <span className="detail-label">Terminal</span>
-                            <span className="detail-value">{sub.terminal || 'NOT CONFIRMED'}</span>
+                            <span className="detail-label">טרמינל</span>
+                            <span className="detail-value">{sub.terminal || 'לא אושר'}</span>
                         </div>
                         <div className="detail-item">
-                            <span className="detail-label">Counters</span>
-                            <span className="detail-value">{sub.counters || 'NOT CONFIRMED'}</span>
+                            <span className="detail-label">דלפקים</span>
+                            <span className="detail-value">{sub.counters || 'לא אושר'}</span>
                         </div>
                         <div className="detail-item">
-                            <span className="detail-label">Check-in Zone</span>
-                            <span className="detail-value">{sub.checkinZone || 'NOT CONFIRMED'}</span>
+                            <span className="detail-label">אזור צ׳ק אין</span>
+                            <span className="detail-value">{sub.checkinZone || 'לא אושר'}</span>
                         </div>
                     </div>
                     <button
@@ -90,7 +90,7 @@ export default function SubscriptionsList({
                         onClick={() => handleDelete(sub)}
                     >
                         <span className="btn-icon">🗑️</span>
-                        <span className="btn-text">Remove Subscription</span>
+                        <span className="btn-text">הסר מינוי</span>
                     </button>
                 </div>
             ))}

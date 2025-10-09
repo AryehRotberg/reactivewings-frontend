@@ -29,7 +29,7 @@ export default function DashboardNav() {
                     <div className={`menu-dropdown ${menuOpen ? 'show' : ''}`}>
                         <div className="menu-item" onClick={handleLogout}>
                             <span className="menu-icon">🚪</span>
-                            <span className="menu-text">Log Out</span>
+                            <span className="menu-text">התנתק</span>
                         </div>
                     </div>
                 </div>

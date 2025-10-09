@@ -11,27 +11,27 @@ export default function Hero({ onGetStarted }: HeroProps) {
                 <div className="hero-content">
                     <div className="hero-badge">
                         <span>🛫</span>
-                        <span>Ben Gurion Airport Flight Monitoring</span>
+                        <span>מערכת ניטור טיסות נתב"ג</span>
                     </div>
 
                     <h1 className="hero-title">
-                        Never miss a flight update with
-                        <span className="highlight"> intelligent notifications</span>
+                        אל תפספסו עדכוני טיסות עם
+                        <span className="highlight"> התראות חכמות</span>
                     </h1>
 
                     <p className="hero-description">
-                        Flight monitoring system for Ben Gurion International Airport.
-                        Subscribe to specific flights and receive instant email notifications
-                        when status, terminal, or schedule changes occur.
+                        מערכת ניטור טיסות לנמל התעופה הבינלאומי בן גוריון.
+                        הירשמו לטיסות ספציפיות וקבלו התראות מיידיות במייל
+                        כאשר מתרחשים שינויים בסטטוס, טרמינל או לוח זמנים.
                     </p>
 
                     <div className="hero-buttons">
                         <button className="primary-button" onClick={onGetStarted}>
-                            <span>Start Monitoring Flights</span>
+                            <span>התחל לעקוב אחר טיסות</span>
                             {/* <span>→</span> */}
                         </button>
                         <a href="#features" className="secondary-button">
-                            <span>See Features</span>
+                            <span>צפה בתכונות</span>
                             <span>↓</span>
                         </a>
                     </div>

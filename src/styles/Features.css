@@ -20,6 +20,7 @@
     font-weight: 700;
     color: #0f172a;
     margin-bottom: 16px;
+    direction: rtl;
 }
 
 .features-subtitle {
@@ -27,6 +28,7 @@
     color: #475569;
     max-width: 600px;
     margin: 0 auto;
+    direction: rtl;
 }
 
 .features-grid {
@@ -37,7 +39,8 @@
 }
 
 .feature-card {
-    text-align: left;
+    text-align: right;
+    direction: rtl;
     padding: 32px;
     border-radius: 16px;
     background: #f8fafc;
@@ -68,11 +71,15 @@
     font-weight: 600;
     color: #0f172a;
     margin-bottom: 12px;
+    direction: rtl;
+    text-align: right;
 }
 
 .feature-description {
     color: #475569;
     line-height: 1.6;
+    direction: rtl;
+    text-align: right;
 }
 
 @media (max-width: 768px) {

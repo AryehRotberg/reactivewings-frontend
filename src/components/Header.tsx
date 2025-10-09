@@ -31,8 +31,8 @@ export default function Header({ onSignIn }: HeaderProps) {
                 </Link>
 
                 <ul className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
-                    <li><a href="#features" className="nav-link" onClick={closeMenu}>Features</a></li>
-                    <li><a href="#contact" className="nav-link" onClick={closeMenu}>Contact</a></li>
+                    <li><a href="#features" className="nav-link" onClick={closeMenu}>תכונות</a></li>
+                    <li><a href="#contact" className="nav-link" onClick={closeMenu}>צור קשר</a></li>
                     <li>
                         <a
                             href="https://github.com/AryehRotberg/flights"
@@ -41,7 +41,7 @@ export default function Header({ onSignIn }: HeaderProps) {
                             rel="noopener noreferrer"
                             onClick={closeMenu}
                         >
-                            Documentation
+                            תיעוד
                         </a>
                     </li>
                     <li>
@@ -52,12 +52,12 @@ export default function Header({ onSignIn }: HeaderProps) {
                             rel="noopener noreferrer"
                             onClick={closeMenu}
                         >
-                            Support
+                            תמיכה
                         </a>
                     </li>
                     <li>
                         <button onClick={handleSignIn} className="nav-cta">
-                            Sign In
+                            התחבר
                         </button>
                     </li>
                 </ul>

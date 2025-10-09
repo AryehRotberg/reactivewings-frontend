@@ -18,7 +18,7 @@ export default function SubscriptionForm({ onSubscriptionAdded, onMessage }: Sub
         e.preventDefault();
 
         if (!airlineCode || !flightNumber || !scheduledDate) {
-            onMessage('Please fill in all fields.', true);
+            onMessage('אנא מלא את כל השדות.', true);
             return;
         }
 
@@ -28,13 +28,13 @@ export default function SubscriptionForm({ onSubscriptionAdded, onMessage }: Sub
             const searchResults = await searchFlights(airlineCode, flightNumber, scheduledDate);
 
             if (!searchResults || searchResults.length === 0) {
-                onMessage('No flights found with the specified criteria.', true);
+                onMessage('לא נמצאו טיסות עם הקריטריונים שצוינו.', true);
                 setLoading(false);
                 return;
             }
 
             await subscribeToFlight(searchResults);
-            onMessage('Flight subscription added successfully!', false);
+            onMessage('מינוי לטיסה נוסף בהצלחה!', false);
 
             // Reset form
             setAirlineCode('');
@@ -44,7 +44,7 @@ export default function SubscriptionForm({ onSubscriptionAdded, onMessage }: Sub
             onSubscriptionAdded();
         } catch (err) {
             console.error('Error subscribing:', err);
-            onMessage('Failed to add subscription.', true);
+            onMessage('נכשל בהוספת מינוי.', true);
         } finally {
             setLoading(false);
         }
@@ -52,33 +52,33 @@ export default function SubscriptionForm({ onSubscriptionAdded, onMessage }: Sub
 
     return (
         <div className="section">
-            <h2>🔔 Subscribe to a Flight</h2>
+            <h2>🔔 הירשם לטיסה</h2>
             <form onSubmit={handleSubmit}>
                 <div className="form-row-triple">
                     <div className="form-group">
-                        <label htmlFor="airlineCode">Airline Code</label>
+                        <label htmlFor="airlineCode">קוד חברת תעופה</label>
                         <input
                             type="text"
                             id="airlineCode"
-                            placeholder="e.g. EL AL"
+                            placeholder="לדוגמה: אל על"
                             value={airlineCode}
                             onChange={(e) => setAirlineCode(e.target.value)}
                             required
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="flightNumber">Flight Number</label>
+                        <label htmlFor="flightNumber">מספר טיסה</label>
                         <input
                             type="text"
                             id="flightNumber"
-                            placeholder="e.g. LY001"
+                            placeholder="לדוגמה: LY001"
                             value={flightNumber}
                             onChange={(e) => setFlightNumber(e.target.value)}
                             required
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="scheduledDate">Scheduled Date</label>
+                        <label htmlFor="scheduledDate">תאריך מתוכנן</label>
                         <input
                             type="date"
                             id="scheduledDate"
@@ -90,7 +90,7 @@ export default function SubscriptionForm({ onSubscriptionAdded, onMessage }: Sub
                 </div>
                 <button type="submit" className="btn" disabled={loading}>
                     <span className="btn-text">
-                        {loading ? 'Subscribing...' : 'Subscribe to Flight'}
+                        {loading ? 'נרשם...' : 'הירשם לטיסה'}
                     </span>
                 </button>
             </form>

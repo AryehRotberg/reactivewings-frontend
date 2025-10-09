@@ -4,6 +4,7 @@
     background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
     min-height: 100vh;
     padding: 80px 20px 20px 20px;
+    direction: rtl;
 }
 
 .container {
@@ -25,6 +26,7 @@
     text-align: center;
     position: relative;
     overflow: hidden;
+    direction: rtl;
 }
 
 .dashboard-page .header h1 {
@@ -74,6 +76,8 @@
     border-bottom: 2px solid #87ceeb;
     padding-bottom: 10px;
     position: relative;
+    text-align: right;
+    direction: rtl;
 }
 
 @media (max-width: 768px) {

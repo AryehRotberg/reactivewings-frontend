@@ -20,11 +20,11 @@ export default function DashboardPage() {
         refetch(true);
     });
 
-    useEffect(() => {
-        if (!isAuthenticated()) {
-            navigate('/');
-        }
-    }, [navigate]);
+    // useEffect(() => {
+    //     if (!isAuthenticated()) {
+    //         navigate('/');
+    //     }
+    // }, [navigate]);
 
     const handleMessage = (message: string, isError: boolean) => {
         showToast(message, isError ? 'error' : 'success');
@@ -36,8 +36,8 @@ export default function DashboardPage() {
             <DashboardNav />
             <div className="container">
                 <div className="header">
-                    <h1>Flight Subscription Manager</h1>
-                    <p>Stay updated with real-time flight information</p>
+                    <h1>מערכת ניהול מינויים לטיסות</h1>
+                    <p>הישארו מעודכנים עם מידע בזמן אמת על טיסות</p>
                 </div>
 
                 <div className="content">
@@ -47,16 +47,16 @@ export default function DashboardPage() {
                     />
 
                     <div className="section">
-                        <h2>📋 Your Subscriptions</h2>
+                        <h2>📋 המינויים שלך</h2>
                         <button onClick={() => refetch(false)} className="btn btn-refresh">
                             <span className="btn-icon">🔄</span>
-                            <span className="btn-text">Refresh Subscriptions</span>
+                            <span className="btn-text">רענן מינויים</span>
                         </button>
 
                         {userInfo && (
                             <div className="user-info">
-                                <h3>👤 User Information</h3>
-                                <p><strong>Email:</strong> {userInfo.email}</p>
+                                <h3>👤 מידע משתמש</h3>
+                                <p><strong>אימייל:</strong> {userInfo.email}</p>
                             </div>
                         )}
 

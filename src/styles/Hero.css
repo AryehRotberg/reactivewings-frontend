@@ -39,29 +39,29 @@
 
 .hero-title {
     font-size: 3.5em;
-    font-weight: 800;
-    background: linear-gradient(135deg, #929292 0%, #c9c9c9 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Arial', sans-serif;
+    color: #ffffff;
     line-height: 1.1;
     margin-bottom: 24px;
-    letter-spacing: -0.02em;
+    direction: rtl;
+    text-align: center;
 }
 
 .hero-title .highlight {
-    background: linear-gradient(135deg, #244bce 0%, #3b82f6 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #3b82f6;
+    font-weight: 700;
 }
 
 .hero-description {
     font-size: 1.25em;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Arial', sans-serif;
     color: #ffffff;
     margin: 0 auto 40px auto;
     line-height: 1.6;
     max-width: 500px;
+    direction: rtl;
+    text-align: center;
 }
 
 .hero-buttons {

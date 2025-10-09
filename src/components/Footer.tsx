@@ -10,39 +10,39 @@ export default function Footer() {
                     <div className="footer-column footer-brand">
                         <h3 className="footer-logo">✈️ reactivewings</h3>
                         <p className="footer-description">
-                            Real-time flight tracking and monitoring system for Ben Gurion Airport.
-                            Stay updated with the latest flight information and never miss a departure or arrival.
+                            מערכת מעקב וניטור טיסות בזמן אמת לנמל התעופה בן גוריון.
+                            הישארו מעודכנים עם המידע האחרון על טיסות ואל תפספסו המראה או נחיתה.
                         </p>
                     </div>
 
                     <div className="footer-column">
-                        <h4 className="footer-heading">Navigation</h4>
+                        <h4 className="footer-heading">ניווט</h4>
                         <ul className="footer-links">
-                            <li><a href="#home">Home</a></li>
-                            <li><a href="#features">Features</a></li>
-                            <li><a href="/dashboard">Dashboard</a></li>
+                            <li><a href="#home">ראשי</a></li>
+                            <li><a href="#features">תכונות</a></li>
+                            <li><a href="/dashboard">לוח בקרה</a></li>
                         </ul>
                     </div>
 
                     <div className="footer-column">
-                        <h4 className="footer-heading">Connect</h4>
+                        <h4 className="footer-heading">צור קשר</h4>
                         <ul className="footer-links">
                             <li>
                                 <a href="mailto:contact@reactivewings.com">
                                     <span style={{ marginRight: '8px' }}>✉️</span>
-                                    Email Us
+                                    שלח מייל
                                 </a>
                             </li>
                             <li>
                                 <a href="https://github.com/AryehRotberg/reactivewings-frontend" target="_blank" rel="noopener noreferrer">
                                     <span style={{ marginRight: '8px' }}>💻</span>
-                                    Source Code
+                                    קוד מקור
                                 </a>
                             </li>
                             <li>
                                 <a href="https://github.com/AryehRotberg/reactivewings-frontend/issues" target="_blank" rel="noopener noreferrer">
                                     <span style={{ marginRight: '8px' }}>🐛</span>
-                                    Report Issue
+                                    דווח על בעיה
                                 </a>
                             </li>
                         </ul>
@@ -51,7 +51,7 @@ export default function Footer() {
 
                 <div className="footer-bottom">
                     <p className="footer-copyright">
-                        © {currentYear} reactivewings. All rights reserved.
+                        © {currentYear} reactivewings. כל הזכויות שמורות.
                     </p>
                 </div>
             </div>
