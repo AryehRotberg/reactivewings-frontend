@@ -33,10 +33,6 @@
     transition: all 0.3s ease;
 }
 
-/* .dashboard-logo:hover {
-    transform: scale(1.02);
-} */
-
 .dashboard-logo-icon {
     font-size: 1.4em;
     background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);

@@ -90,7 +90,6 @@ select:focus {
     select {
         padding: 14px 12px;
         font-size: 16px;
-        /* Prevents zoom on iOS */
     }
 
     .btn {
