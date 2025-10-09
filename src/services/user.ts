@@ -4,7 +4,6 @@ import type { UserInfo } from "../types";
 
 export async function getUserInfo(): Promise<UserInfo | null> {
     if (!isAuthenticated()) {
-        console.log("No token found, user not authenticated.");
         return null;
     }
 
@@ -18,7 +17,6 @@ export async function getUserInfo(): Promise<UserInfo | null> {
             const userData: UserInfo = await response.json();
             return userData;
         } else {
-            console.log("Invalid/expired token, status:", response.status);
             localStorage.removeItem("authToken");
             window.location.href = "/";
             return null;

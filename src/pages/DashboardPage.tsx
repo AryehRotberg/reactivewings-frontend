@@ -17,13 +17,11 @@ export default function DashboardPage() {
     const { toast, showToast } = useToast();
 
     useAuthCallback(() => {
-        console.log('Token processed, refetching user info...');
         refetch(true);
     });
 
     useEffect(() => {
         if (!isAuthenticated()) {
-            console.log('User not authenticated, redirecting to home');
             navigate('/');
         }
     }, [navigate]);
