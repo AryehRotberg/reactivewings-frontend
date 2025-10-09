@@ -20,11 +20,11 @@ export default function DashboardPage() {
         refetch(true);
     });
 
-    // useEffect(() => {
-    //     if (!isAuthenticated()) {
-    //         navigate('/');
-    //     }
-    // }, [navigate]);
+    useEffect(() => {
+        if (!isAuthenticated()) {
+            navigate('/');
+        }
+    }, [navigate]);
 
     const handleMessage = (message: string, isError: boolean) => {
         showToast(message, isError ? 'error' : 'success');
