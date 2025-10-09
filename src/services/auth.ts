@@ -22,7 +22,6 @@ export function handleOauthCallback(): void {
     const token = params.get("token");
 
     if (token) {
-        console.log("Received token from backend:", token);
         localStorage.setItem("authToken", token);
         window.history.replaceState({}, document.title, "/dashboard");
     }
