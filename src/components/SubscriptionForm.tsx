@@ -18,7 +18,7 @@ export default function SubscriptionForm({ onSubscriptionAdded, onMessage }: Sub
         e.preventDefault();
 
         if (!airlineCode || !flightNumber || !scheduledDate) {
-            onMessage('אנא מלא את כל השדות.', true);
+            onMessage('אנא מלאו את כל השדות.', true);
             return;
         }
 
@@ -60,7 +60,7 @@ export default function SubscriptionForm({ onSubscriptionAdded, onMessage }: Sub
                         <input
                             type="text"
                             id="airlineCode"
-                            placeholder="לדוגמה: אל על"
+                            placeholder="לדוגמה: LY"
                             value={airlineCode}
                             onChange={(e) => setAirlineCode(e.target.value)}
                             required
@@ -71,7 +71,7 @@ export default function SubscriptionForm({ onSubscriptionAdded, onMessage }: Sub
                         <input
                             type="text"
                             id="flightNumber"
-                            placeholder="לדוגמה: LY001"
+                            placeholder="לדוגמה: 001"
                             value={flightNumber}
                             onChange={(e) => setFlightNumber(e.target.value)}
                             required
@@ -90,7 +90,7 @@ export default function SubscriptionForm({ onSubscriptionAdded, onMessage }: Sub
                 </div>
                 <button type="submit" className="btn" disabled={loading}>
                     <span className="btn-text">
-                        {loading ? 'נרשם...' : 'הירשם לטיסה'}
+                        {loading ? 'מבצע רישום...' : 'הירשמו לטיסה'}
                     </span>
                 </button>
             </form>
