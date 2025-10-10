@@ -4,6 +4,7 @@
     color: white;
     padding: 60px 20px 20px;
     border-top: 1px solid rgba(59, 130, 246, 0.2);
+    direction: rtl;
 }
 
 .footer-container {
@@ -22,10 +23,11 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+    text-align: right;
 }
 
 .footer-brand {
-    padding-right: 20px;
+    padding-left: 20px;
 }
 
 .footer-logo {
@@ -33,6 +35,7 @@
     font-weight: 700;
     margin-bottom: 12px;
     color: #3b82f6;
+    text-align: right;
 }
 
 .footer-description {
@@ -40,6 +43,7 @@
     line-height: 1.6;
     font-size: 0.95em;
     margin-bottom: 20px;
+    text-align: right;
 }
 
 .footer-social {
@@ -70,6 +74,7 @@
     font-weight: 600;
     margin-bottom: 8px;
     color: white;
+    text-align: right;
 }
 
 .footer-links {
@@ -87,21 +92,18 @@
     font-size: 0.9em;
     transition: all 0.3s ease;
     display: inline-block;
+    text-align: right;
 }
 
 .footer-links li a:hover {
     color: #3b82f6;
-    transform: translateX(4px);
+    transform: translateX(-4px);
 }
 
 .footer-bottom {
     padding-top: 30px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 16px;
+    text-align: right;
 }
 
 .footer-copyright,
@@ -139,13 +141,40 @@
 
     .footer-brand {
         grid-column: span 2;
-        padding-right: 0;
+        padding-left: 0;
+        text-align: center;
+    }
+
+    .footer-logo {
+        text-align: center;
+    }
+
+    .footer-description {
+        text-align: center;
+    }
+
+    .footer-social {
+        justify-content: center;
+    }
+
+    .footer-column {
+        text-align: center;
+    }
+
+    .footer-heading {
+        text-align: center;
+    }
+
+    .footer-links {
+        align-items: center;
+    }
+
+    .footer-links li a {
+        text-align: center;
     }
 
     .footer-bottom {
-        flex-direction: column;
         text-align: center;
-        gap: 12px;
     }
 }
 
@@ -157,13 +186,34 @@
 
     .footer-brand {
         grid-column: span 1;
+        text-align: center;
+    }
+
+    .footer-logo {
+        text-align: center;
+    }
+
+    .footer-description {
+        text-align: center;
     }
 
     .footer-social {
         justify-content: center;
     }
 
+    .footer-column {
+        text-align: center;
+    }
+
+    .footer-heading {
+        text-align: center;
+    }
+
     .footer-links {
         align-items: center;
+    }
+
+    .footer-links li a {
+        text-align: center;
     }
 }
