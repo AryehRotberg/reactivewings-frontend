@@ -65,12 +65,12 @@ export default function SubscriptionsList({
                         <div className="detail-item">
                             <span className="detail-label">יעד</span>
                             <span className="detail-value">
-                                {sub.cityEn || 'לא זמין'} ({sub.countryEn || 'לא זמין'})
+                                {sub.cityHe || 'לא זמין'} ({sub.countryHe || 'לא זמין'})
                             </span>
                         </div>
                         <div className="detail-item">
                             <span className="detail-label">סטטוס</span>
-                            <span className="detail-value">{sub.statusEn || 'לא ידוע'}</span>
+                            <span className="detail-value">{sub.statusHe || 'לא ידוע'}</span>
                         </div>
                         <div className="detail-item">
                             <span className="detail-label">טרמינל</span>

@@ -5,8 +5,11 @@ export interface Flight {
     estimatedTime: string;
     airlineName: string;
     cityEn: string;
+    cityHe: string;
     countryEn: string;
+    countryHe: string;
     statusEn: string;
+    statusHe: string;
     terminal: string;
     counters: string;
     checkinZone: string;
