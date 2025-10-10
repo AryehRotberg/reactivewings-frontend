@@ -78,11 +78,11 @@ export default function SubscriptionsList({
                         </div>
                         <div className="detail-item">
                             <span className="detail-label">דלפקים</span>
-                            <span className="detail-value">{sub.counters || 'לא אושר'}</span>
+                            <span className="detail-value">{(sub.direction === "D" ? sub.counters : "לא זמין") || 'לא אושר'}</span>
                         </div>
                         <div className="detail-item">
                             <span className="detail-label">אזור צ׳ק אין</span>
-                            <span className="detail-value">{sub.checkinZone || 'לא אושר'}</span>
+                            <span className="detail-value">{(sub.direction === "D" ? sub.checkinZone : "לא זמין") || 'לא אושר'}</span>
                         </div>
                     </div>
                     <button

@@ -4,6 +4,7 @@ export interface Flight {
     scheduledTime: string;
     estimatedTime: string;
     airlineName: string;
+    direction: string;
     cityEn: string;
     cityHe: string;
     countryEn: string;
