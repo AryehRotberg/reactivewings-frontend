@@ -90,7 +90,7 @@ export default function SubscriptionForm({ onSubscriptionAdded, onMessage }: Sub
                 </div>
                 <button type="submit" className="btn" disabled={loading}>
                     <span className="btn-text">
-                        {loading ? 'מבצע רישום...' : 'הירשמו לטיסה'}
+                        {loading ? 'מבצע רישום...' : 'הירשם לטיסה'}
                     </span>
                 </button>
             </form>
